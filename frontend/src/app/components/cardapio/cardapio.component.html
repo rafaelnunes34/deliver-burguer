@@ -127,11 +127,11 @@
                     <div class="col col-md-5">
                         <div class="mb-3">
                             <label for="cep" class="form-label">CEP:</label>
-                            <input type="text" class="form-control" id="cep" (keydown.enter)="buscarEnderecoPorCep($event)"
-                                [(ngModel)]="checkout.endereco.cep" autocomplete="off" required="true">
+                            <input type="search" class="form-control" id="cep" #mySearch (ngModelChange)="buscarEnderecoPorCep(mySearch.value)"
+                                maxlength="8" [(ngModel)]="checkout.endereco.cep" autocomplete="off" required="true">
                         </div>
                     </div>
-                    <div class="col col-md-7">
+                    <div class="col col-md-6">
                         <div class="mb-3">
                             <label for="bairro" class="form-label">Bairro:</label>
                             <input type="text" class="form-control" id="bairro" disabled="true"

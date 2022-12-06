@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Usuario } from 'src/app/model/usuario';
 import { AuthService } from 'src/app/service/auth.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
@@ -19,7 +20,8 @@ export class CadastroClienteComponent implements OnInit {
     private formBuilder: FormBuilder,
     public authService: AuthService,
     private usuarioService: UsuarioService,
-    private route: Router) 
+    private route: Router,
+    private toast: ToastrService) 
     {
       this.formCadastro = this.criarFormCadastro();
      }
@@ -47,6 +49,7 @@ export class CadastroClienteComponent implements OnInit {
     this.usuarioService.adicionarUsuario(this.usuario).subscribe(
       {next: (response: Usuario) => {
         this.usuario = response;
+        this.toast.success("Cadastro realizado com sucesso");
         this.route.navigate(["''"]);
       }, error: (err) => console.log(console.error(err))
     });

@@ -98,18 +98,21 @@ export class CardapioComponent implements OnInit {
   }
 
   buscarEnderecoPorCep(event: any): void {
-    const tecla = (event.keyCode ? event.keyCode : event.which);
-    alert(tecla);
-    //const keycode = (event.keyCode ? event.keyCode : event.which);
     
-      /*this.enderecoService.buscarEndereco(this.checkout.endereco.cep).subscribe({
+    if(event.length >= 8) {
+      this.enderecoService.buscarEndereco(event).subscribe({
         next: (res: Endereco) => {
           this.checkout.endereco = res;
         },
-        error: (e) => console.error(e)
-      }); */
-    
-
+        error: (e) => {
+          this.toast.error("Erro ao buscar cep")
+        }
+      })
+    }
+    else if(event.length == 0) {
+      this.checkout.endereco = new Endereco();
+    }
+      
   }
 
   enviarPedido(): void {
