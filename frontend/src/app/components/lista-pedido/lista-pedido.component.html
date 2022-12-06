@@ -1,0 +1,51 @@
+<app-navbar [authService]="authService"></app-navbar>
+<div class="container mt-2 mb-5">
+    <div class="row">
+        <h4>Meus Pedidos</h4>
+        <hr>
+    </div>
+
+    <div class="row shadow p-3 mb-2 m-1 bg-body"  *ngFor="let pedido of listaPedidos">
+        <div class="row  mb-2">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div><span class="text-muted">N° Pedido:</span> {{ pedido.id }}</div>
+                <div>
+                    <button class="btn btn-outline-danger btn-sm" [disabled]="pedido.status !== 'PENDENTE'" (click)="cancelarPedido(pedido)">
+                        <i class="bi bi-x-octagon-fill"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-1 mb-3">
+            <div class="col-sm-12 col-md-4"><span class="text-muted">Data :</span> {{ pedido.data | date : "dd/MM/yyyy HH:mm:ss" }}</div>
+            <div class="col-sm-6 col-md-2">
+                <span class="text-muted">Status : </span>
+                <span [ngClass]="{ 
+                    'text-pendente': pedido.status === 'PENDENTE' ,
+                    'text-preparando': pedido.status === 'PREPARANDO' ,
+                    'text-enviado': pedido.status === 'ENVIADO' , 
+                    'text-entregue': pedido.status === 'ENTREGUE' ,
+                    'text-cancelado': pedido.status === 'CANCELADO' 
+                }">
+                    {{ pedido.status }}
+                </span>
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-1 mb-3">
+            <div class="col-sm-12 col-md-3"><span class="text-muted">Cliente:</span> <span class="text-capitalize"> {{
+                    pedido.clienteNome }}</span></div>
+            <div class="col-sm-6 col-md-4"><span class="text-muted">Forma de Pagamento:</span> {{ pedido.formaPagamento }}</div>
+            <div class="col-sm-12 col-md-3"><span class="text-muted">Valor Pedido:</span> {{ pedido.total | currency :
+                "BRL" }}</div>
+        </div>
+        <hr>
+        <div class="row mt-1">
+            <div class="col-sm-12 col-md-12"><span class="text-muted">Endereço:</span> {{ pedido.cidade }} - {{
+                pedido.bairro }} - {{
+                pedido.endereco }}</div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

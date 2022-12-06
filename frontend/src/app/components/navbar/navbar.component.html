@@ -1,0 +1,27 @@
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="'/'">Deliver Burguer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown" *ngIf="isAuthenticated">
+          <a class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ usuarioLogado }}
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="'/pedidos'">Pedidos</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" (click)="sair()">Sair</a></li>
+          </ul>
+        </li>
+      </ul>
+      <a class="btn btn-dark" [routerLink]="'/login'" *ngIf="!isAuthenticated">LOGIN</a>
+      <a class="btn btn-secondary" [routerLink]="'/cadastro'" *ngIf="!isAuthenticated">CADASTRE-SE</a>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,33 @@
+.row.shadow hr {
+    border: 1px solid #BDBDBD;
+}
+
+.text-pendente, .text-preparando, .text-enviado,
+.text-entregue, .text-cancelado {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 4px 2px 4px;
+    border: none;
+    border-radius: 5px;
+}
+
+.text-pendente {
+    background: #BDC3C7;
+}
+
+.text-preparando {
+    background: #F7DC6F;
+}
+
+.text-enviado {
+    background: #85C1E9;
+}
+
+.text-entregue {
+    background: #82E0AA;
+}
+
+.text-cancelado {
+    background: #EC7063;
+    color: #fff;
+}

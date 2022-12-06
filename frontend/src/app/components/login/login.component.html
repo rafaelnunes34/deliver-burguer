@@ -1,0 +1,37 @@
+<app-navbar [authService]="authService"></app-navbar>
+<div class="container">
+    <div class="d-flex justify-content-center mt-5">
+        <div class="shadow-sm p-5 mb-5 bg-body rounded">
+            <div class="col-12">
+                <h4>Faça seu login</h4>
+                <hr>
+
+                <form [formGroup]="formLogin">
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Digite seu email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="name@example.com"
+                                formControlName="email" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="senha" class="form-label">Digite sua senha:</label>
+                            <input type="password" class="form-control" id="senha" formControlName="senha"
+                                autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-success" [disabled]="!formLogin.valid"
+                                (click)="submitForm()">Entrar</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,178 @@
+<app-navbar [authService]="authService"></app-navbar>
+<div class="container mt-3 mb-5">
+    <div class="row">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Cardapio</h2>
+            <div class="d-flex flex-column">
+                <div class="col-12">
+                    <span class="text-sm-start">Buscar por Categoria</span>
+                </div>
+                <div class="col-12">
+                    <div class="d-flex">
+                        <div class="form-group">
+                            <select class="form-select" [ngModelOptions]="{standalone: true}" [(ngModel)]="categoriaId">
+                                <option selected>Todos</option>
+                                <option *ngFor="let categoria of listaCategorias" [ngValue]="categoria.id">{{
+                                    categoria.nome }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-light" (click)="pesquisarProdutosPorCategoria()">
+                                <i class="bi bi-search" style="font-size: 18px"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="mt-3">
+    </div>
+    <div class="alert alert-warning" role="alert" *ngIf="carrinhoProdutos.length == 0">
+        A pesquisa não retornou nenhum produto
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!--Inicio card-->
+        <div class="col" *ngFor="let carrinhoProduto of carrinhoProdutos">
+            <div class="card h-100">
+                <img src="{{ carrinhoProduto.produto.imgUrl }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ carrinhoProduto.produto.nome }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ carrinhoProduto.produto.preco | currency: "BRL" }}</h6>
+                    <p class="card-text">{{ carrinhoProduto.produto.descricao }}.</p>
+                </div>
+                <div class="d-flex justify-content-center mb-2 box-quantidade">
+                    <button class="button-quantidade" (click)="diminuirQuantidade(carrinhoProduto)">-</button>
+                    <input class="form-control-plaintext" type="number" name="" id=""
+                        [(ngModel)]="carrinhoProduto.quantidade">
+                    <button class="button-quantidade" (click)="aumentarQuantidade(carrinhoProduto)">+</button>
+                </div>
+                <button class="btn btn-success m-2" (click)="adicionarProdutoCarrinho(carrinhoProduto)">Comprar</button>
+            </div>
+        </div>
+        <!--Fim card-->
+    </div>
+
+    <button class="btn btn-danger float-button" type="button" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+        <i class="bi bi-cart4"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ totalItensCarrinho }}
+            <span class="visually-hidden">unread messages</span>
+        </span>
+    </button>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Meu Carrinho</h5>
+            <button type="button" id="button-close" class="btn-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+            <!--INICIO CARRINHO DE COMPRAS-->
+            <div class="alert alert-warning" role="alert" *ngIf="itensCarrinho.length == 0">
+                Seu carrinho está vazio!
+            </div>
+            <div class="row m-1" *ngIf="itensCarrinho.length > 0">
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Produto</th>
+                                <th scope="col">Qtde</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let carrinho of itensCarrinho">
+                                <th scope="row">
+                                    <img src="{{ carrinho.produto.imgUrl }}" class="img-thumbnail" alt="...">
+                                </th>
+                                <td>{{ carrinho.produto.nome }}</td>
+                                <td class="text-center">{{ carrinho.quantidade }}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm text-center"
+                                        (click)="removerProdutoCarrinho(carrinho)">
+                                        <i class="bi bi-trash"></i>
+                                        Excluir
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p>SUBTOTAL:</p>
+                    <h5>{{ totalValorCarrinho | currency: 'BRL' }}</h5>
+                </div>
+                <hr>
+
+                <div class="mb-3">
+                    <label for="formaPagamento" class="form-label">Selecione a forma de pagamento</label>
+                    <select class="form-select" aria-label="forma pagamento" [(ngModel)]="checkout.formaPagamento">
+                        <option *ngFor="let formaPagamento of listaFormaPagamento" [ngValue]="formaPagamento">{{
+                            formaPagamento }}</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p>Digite seu endereço abaixo:</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-md-5">
+                        <div class="mb-3">
+                            <label for="cep" class="form-label">CEP:</label>
+                            <input type="text" class="form-control" id="cep" (keypress)="buscarEnderecoPorCep($event)"
+                                [(ngModel)]="checkout.endereco.cep" autocomplete="off" required="true">
+                        </div>
+                    </div>
+                    <div class="col col-md-7">
+                        <div class="mb-3">
+                            <label for="bairro" class="form-label">Bairro:</label>
+                            <input type="text" class="form-control" id="bairro" disabled="true"
+                                [(ngModel)]="checkout.endereco.bairro">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <div class="mb-3">
+                            <label for="endereco" class="form-label">Endereço:</label>
+                            <input type="text" class="form-control" id="endereco" disabled="true"
+                                [ngModel]="checkout.endereco.logradouro">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label for="enderecoNumero" class="form-label">Nº:</label>
+                            <input type="text" class="form-control" id="enderecoNumero" autocomplete="off"
+                                [(ngModel)]="checkout.endereco.numero">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="complemento" class="form-label">Complemento:</label>
+                            <input type="complemento" class="form-control" id="complemento"
+                                [(ngModel)]="checkout.endereco.complemento" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <button class="btn btn-success btn-lg" (click)="enviarPedido()">FINALIZAR PEDIDO</button>
+                </div>
+
+            </div>
+            <!--FIM CARRINHO DE COMPRAS-->
+        </div>
+    </div>
+
+</div>
+<app-footer></app-footer>
