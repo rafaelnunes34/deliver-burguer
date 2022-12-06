@@ -127,7 +127,7 @@
                     <div class="col col-md-5">
                         <div class="mb-3">
                             <label for="cep" class="form-label">CEP:</label>
-                            <input type="text" class="form-control" id="cep" (keydown)="buscarEnderecoPorCep($event)"
+                            <input type="text" class="form-control" id="cep" (keydown.enter)="buscarEnderecoPorCep($event)"
                                 [(ngModel)]="checkout.endereco.cep" autocomplete="off" required="true">
                         </div>
                     </div>

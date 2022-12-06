@@ -98,15 +98,16 @@ export class CardapioComponent implements OnInit {
   }
 
   buscarEnderecoPorCep(event: any): void {
-    const keycode = (event.keyCode ? event.keyCode : event.which);
-    if (keycode == '13') {
+    
+    //const keycode = (event.keyCode ? event.keyCode : event.which);
+    
       this.enderecoService.buscarEndereco(this.checkout.endereco.cep).subscribe({
         next: (res: Endereco) => {
           this.checkout.endereco = res;
         },
         error: (e) => console.error(e)
       });
-    }
+    
 
   }
 
