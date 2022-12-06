@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CarrinhoProduto } from 'src/app/model/carrinhoProduto';
 
@@ -23,6 +22,7 @@ import { ProdutoService } from 'src/app/service/produto.service';
 })
 export class CardapioComponent implements OnInit {
 
+  isProdutoNaoLocalizado: boolean = false;
   produtos: Produto[] = [];
   carrinhoProdutos: CarrinhoProduto[] = [];
   itensCarrinho: CarrinhoProduto[] = [];
@@ -43,7 +43,6 @@ export class CardapioComponent implements OnInit {
     private pedidoService: PedidoService,
     private categoriaService: CategoriaService,
     private enderecoService: EnderecoService,
-    private route: Router,
     private toast: ToastrService
   ) {
     
@@ -99,7 +98,8 @@ export class CardapioComponent implements OnInit {
   }
 
   buscarEnderecoPorCep(event: any): void {
-    if (event.code === 'Enter') {
+    const keycode = (event.keyCode ? event.keyCode : event.which);
+    if (keycode == '13') {
       this.enderecoService.buscarEndereco(this.checkout.endereco.cep).subscribe({
         next: (res: Endereco) => {
           this.checkout.endereco = res;
@@ -141,6 +141,7 @@ export class CardapioComponent implements OnInit {
   private listarProdutos(nCategoriaId: number): void {
     this.produtoService.getListarProdutos(nCategoriaId).subscribe(
       (res: Produto[]) => {
+        this.isProdutoNaoLocalizado = res.length > 0 ? false : true;
         this.produtos = res;
         this.produtos.forEach(x => this.carrinhoProdutos.push(new CarrinhoProduto(x, 1)));
       }
