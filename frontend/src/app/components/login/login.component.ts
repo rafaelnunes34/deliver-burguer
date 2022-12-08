@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-/* public isFormControlInvalid(controlName: string): boolean {
-    return !!(this.formLogin.get(controlName)?invalid && this.formLogin.get(controlName)?.touched);
-  } */
+  public isFormControlInvalid(controlName: string): boolean {
+    return !!(this.formLogin.get(controlName)?.invalid && this.formLogin.get(controlName)?.touched);
+  } 
 
   public criarFormLogin(): FormGroup {
     return this.formBuilder.group({

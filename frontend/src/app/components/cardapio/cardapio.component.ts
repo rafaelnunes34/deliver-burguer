@@ -22,19 +22,19 @@ import { ProdutoService } from 'src/app/service/produto.service';
 })
 export class CardapioComponent implements OnInit {
 
-  isProdutoNaoLocalizado: boolean = false;
-  produtos: Produto[] = [];
-  carrinhoProdutos: CarrinhoProduto[] = [];
-  itensCarrinho: CarrinhoProduto[] = [];
-  totalValorCarrinho: number = 0;
-  totalItensCarrinho: number = 0;
+  public isProdutoNaoLocalizado: boolean = false;
+  public produtos: Produto[] = [];
+  public carrinhoProdutos: CarrinhoProduto[] = [];
+  public itensCarrinho: CarrinhoProduto[] = [];
+  public totalValorCarrinho: number = 0;
+  public totalItensCarrinho: number = 0;
 
-  listaFormaPagamento: string[] = [];
-  listaCategorias: Categoria[] = [];
-  categoriaId: number = 0;
-  endereco: Endereco;
-  pedido: Pedido;
-  checkout: Checkout;
+  public listaFormaPagamento: string[] = [];
+  public listaCategorias: Categoria[] = [];
+  public categoriaId: number = 0;
+  public endereco: Endereco;
+  public pedido: Pedido;
+  public checkout: Checkout;
 
   constructor(
     public authService: AuthService,
@@ -66,22 +66,22 @@ export class CardapioComponent implements OnInit {
     this.checkout = new Checkout();
   }
 
-  aumentarQuantidade(carrinhoProduto: CarrinhoProduto): void {
+  public aumentarQuantidade(carrinhoProduto: CarrinhoProduto): void {
     carrinhoProduto.quantidade++;
   }
 
-  diminuirQuantidade(carrinhoProduto: CarrinhoProduto): void {
+  public diminuirQuantidade(carrinhoProduto: CarrinhoProduto): void {
     if (carrinhoProduto.quantidade > 1) {
       carrinhoProduto.quantidade--;
     }
   }
 
-  adicionarProdutoCarrinho(carrinhoProduto: CarrinhoProduto): void {
+  public adicionarProdutoCarrinho(carrinhoProduto: CarrinhoProduto): void {
     this.carrinhoService.adicionarProdutoCarrinho(carrinhoProduto);
     this.atualizaDadosCarrinho();
   }
 
-  pesquisarProdutosPorCategoria(): void {
+  public pesquisarProdutosPorCategoria(): void {
     this.carrinhoProdutos = [];
     if (typeof this.categoriaId === "number") {
       //recuperar produtos
@@ -92,12 +92,12 @@ export class CardapioComponent implements OnInit {
     }
   }
 
-  removerProdutoCarrinho(carrinhoProduto: CarrinhoProduto): void {
+  public removerProdutoCarrinho(carrinhoProduto: CarrinhoProduto): void {
     this.carrinhoService.removerProdutoCarrinho(carrinhoProduto);
     this.atualizaDadosCarrinho();
   }
 
-  buscarEnderecoPorCep(event: any): void {
+  public buscarEnderecoPorCep(event: any): void {
     
     if(event.length >= 8) {
       this.enderecoService.buscarEndereco(event).subscribe({
@@ -115,7 +115,7 @@ export class CardapioComponent implements OnInit {
       
   }
 
-  enviarPedido(): void {
+  public enviarPedido(): void {
     if(this.authService.isAuthenticated()) {
       this.checkout.itens.push(...this.carrinhoService.retornaItensCarrinho());
       this.pedidoService.enviarPedido(this.checkout).subscribe({

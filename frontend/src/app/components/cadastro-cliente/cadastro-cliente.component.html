@@ -9,29 +9,48 @@
                     <form [formGroup]="formCadastro">
                         <div class="row">
                             <div class="mb-3">
-                                <label for="nome" class="form-label">Digite seu nome:</label>
-                                <input type="text" class="form-control" id="nome" placeholder="Maria Joaquina"
+                                <label for="nome" class="form-label">Nome: *</label>
+                                <input type="text" class="form-control" id="nome" placeholder="Digite seu nome"
                                 formControlName="nome" autocomplete="off">
+                                <div class="form-text text-danger" *ngIf="isFormControlInvalid('nome')">
+                                    O nome deve conter pelo menos 2 caracteres
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="mb-3">
-                                <label for="telefone" class="form-label">Digite seu telefone:</label>
-                                <input type="text" class="form-control" id="telefone" placeholder="(21)974315563"
-                                formControlName="telefone" autocomplete="off">
+                                <label for="telefone" class="form-label">Telefone: *</label>
+                                <input 
+                                    type="text" class="form-control" 
+                                    id="telefone" 
+                                    placeholder="Digite seu telefone"
+                                    formControlName="telefone" 
+                                    autocomplete="off"
+                                    [dropSpecialCharacters]="true"
+                                    mask="(00) 0 0000 0000"
+                                >
+                                <div class="form-text text-danger" *ngIf="isFormControlInvalid('telefone')">
+                                    O numero de telefone inválido
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="mb-3">
-                                <label for="email" class="form-label">Digite seu email:</label>
-                                <input type="email" class="form-control" id="email" placeholder="email@gmail.com"
+                                <label for="email" class="form-label">Digite seu email: *</label>
+                                <input type="email" class="form-control" id="email" placeholder="Digite seu email"
                                 formControlName="email" autocomplete="off">
+                                <div class="form-text text-danger" *ngIf="isFormControlInvalid('email')">
+                                    Email inválido
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="mb-3">
-                                <label for="senha" class="form-label">Digite sua senha:</label>
+                                <label for="senha" class="form-label">Digite sua senha: *</label>
                                 <input type="password" class="form-control" id="senha" formControlName="senha"  autocomplete="off">
+                                <div class="form-text text-danger" *ngIf="isFormControlInvalid('senha')">
+                                    A senha deve conter pelo menos 6 caracteres!
+                                </div>
                             </div>
                         </div>
                         <div class="row">

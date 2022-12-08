@@ -17,6 +17,13 @@ import { FooterComponent } from './components/footer/footer.component';
 
 import { ToastrModule } from 'ngx-toastr';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
+
+const maskConfigFunction: () => Partial<IConfig> = () => {
+  return {
+    validation: false,
+  };
+};
 
 @NgModule({
   declarations: [
@@ -37,6 +44,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    NgxMaskModule.forRoot({
+      dropSpecialCharacters: false
+    }),
     FormsModule,
     ReactiveFormsModule
   ],
@@ -47,7 +57,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
       useClass: AuthInterceptor,
       multi: true
     },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy } //acerta o problema de reload em produção
   ],
   bootstrap: [AppComponent]
 })

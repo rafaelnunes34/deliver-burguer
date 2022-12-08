@@ -9,16 +9,22 @@
                 <form [formGroup]="formLogin">
                     <div class="row">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Digite seu email:</label>
-                            <input type="email" class="form-control" id="email" placeholder="name@example.com"
+                            <label for="email" class="form-label">Digite seu email: *</label>
+                            <input type="email" class="form-control" id="email"
                                 formControlName="email" autocomplete="off">
+                            <div class="form-text text-danger" *ngIf="isFormControlInvalid('email')">
+                                Email inválido!
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3">
-                            <label for="senha" class="form-label">Digite sua senha:</label>
+                            <label for="senha" class="form-label">Digite sua senha: *</label>
                             <input type="password" class="form-control" id="senha" formControlName="senha"
                                 autocomplete="off">
+                            <div class="form-text text-danger" *ngIf="isFormControlInvalid('senha')">
+                                A senha deve conter pelo menos 6 caracteres!
+                            </div>
                         </div>
                     </div>
                     <div class="row">

@@ -14,7 +14,7 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 export class CadastroClienteComponent implements OnInit {
 
   public formCadastro: FormGroup;
-  usuario: Usuario;
+  public usuario: Usuario;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,20 +39,24 @@ export class CadastroClienteComponent implements OnInit {
     });
   }
 
+  public isFormControlInvalid(controlName: string): boolean {
+    return !!(this.formCadastro.get(controlName)?.invalid && this.formCadastro.get(controlName)?.touched);
+  }
+
   public salvarUsuario(): void {
     const {nome, telefone, email, senha} = this.formCadastro.value;
     this.usuario.nome = nome;
     this.usuario.telefone = telefone;
     this.usuario.email = email;
     this.usuario.senha = senha;
-
+    
     this.usuarioService.adicionarUsuario(this.usuario).subscribe(
       {next: (response: Usuario) => {
         this.usuario = response;
         this.toast.success("Cadastro realizado com sucesso");
         this.route.navigate(["''"]);
       }, error: (err) => console.log(console.error(err))
-    });
+    }); 
   }
 
 }

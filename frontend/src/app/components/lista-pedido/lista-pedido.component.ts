@@ -23,7 +23,7 @@ export class ListaPedidoComponent implements OnInit {
     this.listarPedidos();
   }
 
-  cancelarPedido(pedido: Pedido): void {
+  public cancelarPedido(pedido: Pedido): void {
     this.pedidoService.cancelarPedido(pedido.id).subscribe({
       next: (response: Pedido) => {
         this.toast.success("Pedido Nº " + response.id + " cancelado com sucesso.");
