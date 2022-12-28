@@ -10,7 +10,8 @@ import com.rafaelnunes.deliverlanches.entities.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	
-	@Query("SELECT obj FROM Produto obj INNER JOIN obj.categoria cat "
+	@Query("SELECT obj FROM Produto obj JOIN FETCH obj.categoria cat "
 			+ "WHERE COALESCE(:categoria) IS NULL OR cat = :categoria")
 	List<Produto> buscarProdutosPorCategoria(Categoria categoria);
+	
 }

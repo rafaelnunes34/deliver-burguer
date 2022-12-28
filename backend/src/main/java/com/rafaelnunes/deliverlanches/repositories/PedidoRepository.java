@@ -10,14 +10,14 @@ import com.rafaelnunes.deliverlanches.projections.PedidoProjection;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 	
-	@Query(nativeQuery = true, value = "SELECT P.ID, P.DATA_PEDIDO AS DATAPEDIDO, P.FORMA_PAGAMENTO AS FORMAPAGAMENTO, P.STATUS, U.NOME AS CLIENTENOME, "
-			+ "E.LOCALIDADE AS CIDADE, E.BAIRRO, CONCAT(E.LOGRADOURO,  ' ' ,E.NUMERO) AS LOGRADOURO, E.COMPLEMENTO AS ENDERECOCOMPLEMENTO, "
-			+ "SUM(PI.QUANTIDADE * PI.VALOR) AS TOTAL "
-			+ "FROM TB_ENDERECO E INNER JOIN TB_PEDIDO P ON E.PEDIDO_ID=P.ID "
-			+ "INNER JOIN TB_USUARIO U ON P.CLIENTE_ID=U.ID "
-			+ "INNER JOIN TB_PEDIDO_ITEM PI ON P.ID=PI.PEDIDO_ID "
-			+ "WHERE U.ID= :clienteId "
-			+ "GROUP BY P.ID, P.DATA_PEDIDO, P.FORMA_PAGAMENTO, P.STATUS, U.NOME, E.LOCALIDADE, E.BAIRRO, E.LOGRADOURO, E.NUMERO, E.COMPLEMENTO "
-			+ "ORDER BY P.DATA_PEDIDO DESC")
+	@Query(nativeQuery = true, value = "SELECT p.id, p.data_pedido AS dataPedido, p.forma_pagamento AS formaPagamento, p.status, u.nome AS clienteNome, "
+			+ "e.localidade AS cidade, e.bairro, CONCAT(e.logradouro,  ' ' ,e.numero) AS logradouro, e.complemento AS enderecoComplemento, "
+			+ "SUM(PI.QUANTIDADE * PI.VALOR) AS total "
+			+ "FROM tb_endereco e INNER JOIN tb_pedido p ON e.pedido_id=p.id "
+			+ "INNER JOIN tb_usuario u ON p.cliente_id=u.id "
+			+ "INNER JOIN tb_pedido_item pi ON p.id=pi.pedido_id "
+			+ "WHERE u.id= :clienteId "
+			+ "GROUP BY p.id, p.data_pedido, p.forma_pagamento, p.status, u.nome, e.localidade, e.bairro, e.logradouro, e.numero, e.complemento "
+			+ "ORDER BY p.data_pedido")
 	List<PedidoProjection> listarPedidos(long clienteId); 
 }

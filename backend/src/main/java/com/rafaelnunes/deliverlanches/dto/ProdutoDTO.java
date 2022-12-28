@@ -14,15 +14,18 @@ public class ProdutoDTO implements Serializable {
 	private String imgUrl;
 	private Double preco;
 	
+	private CategoriaDTO categoria;
+	
 	public ProdutoDTO() {
 	}
 
-	public ProdutoDTO(Long id, String nome, String descricao, String imgUrl, Double preco) {
+	public ProdutoDTO(Long id, String nome, String descricao, String imgUrl, Double preco, CategoriaDTO categoria) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.imgUrl = imgUrl;
 		this.preco = preco;
+		this.categoria = categoria;
 	}
 	
 	public ProdutoDTO(Produto prod) {
@@ -31,8 +34,9 @@ public class ProdutoDTO implements Serializable {
 		descricao = prod.getDescricao();
 		imgUrl = prod.getImgUrl();
 		preco = prod.getPreco();
+		categoria = new CategoriaDTO(prod.getCategoria());
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -71,5 +75,13 @@ public class ProdutoDTO implements Serializable {
 
 	public void setPreco(Double preco) {
 		this.preco = preco;
+	}
+
+	public CategoriaDTO getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaDTO categoria) {
+		this.categoria = categoria;
 	}
 }
