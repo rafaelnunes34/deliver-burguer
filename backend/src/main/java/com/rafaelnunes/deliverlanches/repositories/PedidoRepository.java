@@ -12,7 +12,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 	
 	@Query(nativeQuery = true, value = "SELECT p.id, p.data_pedido AS dataPedido, p.forma_pagamento AS formaPagamento, p.status, u.nome AS clienteNome, "
 			+ "e.localidade AS cidade, e.bairro, CONCAT(e.logradouro,  ' ' ,e.numero) AS logradouro, e.complemento AS enderecoComplemento, "
-			+ "SUM(PI.QUANTIDADE * PI.VALOR) AS total "
+			+ "SUM(pi.QUANTIDADE * pi.VALOR) AS total "
 			+ "FROM tb_endereco e INNER JOIN tb_pedido p ON e.pedido_id=p.id "
 			+ "INNER JOIN tb_usuario u ON p.cliente_id=u.id "
 			+ "INNER JOIN tb_pedido_item pi ON p.id=pi.pedido_id "

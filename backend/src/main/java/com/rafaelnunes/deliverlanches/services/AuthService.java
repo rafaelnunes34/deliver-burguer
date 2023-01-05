@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.rafaelnunes.deliverlanches.entities.Usuario;
 import com.rafaelnunes.deliverlanches.repositories.UsuarioRepository;
+import com.rafaelnunes.deliverlanches.services.exceptions.UnauthorizedException;
 
 @Service
 public class AuthService {
@@ -16,7 +17,12 @@ public class AuthService {
 	
 	@Transactional(readOnly = true)
 	public Usuario retornaUsuarioAuthenticado() {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		return repository.findByEmail(username);
+		try {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			return repository.findByEmail(username);
+		}
+		catch(Exception e) {
+			throw new UnauthorizedException("Acesso negado");
+		}
 	}
 }

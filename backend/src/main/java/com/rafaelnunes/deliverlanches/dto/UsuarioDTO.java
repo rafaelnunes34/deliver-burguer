@@ -16,7 +16,7 @@ public class UsuarioDTO implements Serializable {
 	@NotBlank(message = "O campo não pode ser vazio.")
 	private String nome;
 	
-	@Size(min = 11, max = 11, message = "Erro ao digitar o número de telefone.")
+	@Size(min = 11, message = "Erro ao digitar o número de telefone.")
 	private String telefone;
 	
 	public UsuarioDTO() {

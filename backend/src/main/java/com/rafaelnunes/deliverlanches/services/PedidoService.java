@@ -60,23 +60,15 @@ public class PedidoService {
 		
 		Usuario clienteLogado = authService.retornaUsuarioAuthenticado();
 		
-		Pedido pedido = new Pedido();
-		pedido.setDataPedido(Instant.now());
-		pedido.setStatus(PedidoStatus.PENDENTE);
-		pedido.setCliente(clienteLogado);
-		pedido.setFormaPagamento(FormaPagamento.valueOf(dto.getFormaPagamento()));
+		Pedido pedido = new Pedido(null, Instant.now(), PedidoStatus.PENDENTE, FormaPagamento.valueOf(dto.getFormaPagamento()), clienteLogado, null);
 		pedido = repository.saveAndFlush(pedido);
 		
 		Endereco endereco = enderecoService.salvarEndereco(dto.getEndereco(), pedido);
 		pedido.setEndereco(endereco);
 		
 		for(CarrinhoProdutoDTO itemDto : dto.getItens()) {
-			PedidoItem item = new PedidoItem();
 			Produto produto = produtoRepository.getOne(itemDto.getProduto().getId());
-			item.setPedido(pedido);
-			item.setProduto(produto);
-			item.setValor(produto.getPreco());
-			item.setQuantidade(itemDto.getQuantidade());
+			PedidoItem item = new PedidoItem(pedido, produto, itemDto.getQuantidade(), produto.getPreco());
 			listItem.add(item);
 		}
 		

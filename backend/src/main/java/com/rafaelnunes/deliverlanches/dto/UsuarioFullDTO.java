@@ -8,6 +8,7 @@ public class UsuarioFullDTO extends UsuarioDTO	 {
 
 	private static final long serialVersionUID = 1L;
 	
+	@NotBlank(message = "O campo não pode ser vazio.")
 	@Email(message = "Email inválido.")
 	private String email;
 	
