@@ -8,15 +8,15 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.rafaelnunes.deliverlanches.client.ApiViaCepClient;
 import com.rafaelnunes.deliverlanches.dto.EnderecoDTO;
 import com.rafaelnunes.deliverlanches.dto.EnderecoViaCepDTO;
 import com.rafaelnunes.deliverlanches.resources.exceptions.FieldMessage;
-import com.rafaelnunes.deliverlanches.services.ApiViaCepService;
 
 public class EnderecoInsertValidator implements ConstraintValidator<EnderecoInsertValid, EnderecoDTO> {
 	
 	@Autowired
-	private ApiViaCepService apiViaCepService;
+	private ApiViaCepClient apiViaCepClient;
 
 	@Override
 	public void initialize(EnderecoInsertValid ann) {
@@ -47,7 +47,7 @@ public class EnderecoInsertValidator implements ConstraintValidator<EnderecoInse
 			list.add(new FieldMessage("Numero", "O numero do endereço deve ser informado."));
 		}
 		
-		EnderecoViaCepDTO enderecoDTO = apiViaCepService.buscarEnderecoCep(dto.getCep());
+		EnderecoViaCepDTO enderecoDTO = apiViaCepClient.buscarEndereco(dto.getCep());
 		
 		if(enderecoDTO == null) {
 			list.add(new FieldMessage("Cep", "Cep informado e inválido."));
