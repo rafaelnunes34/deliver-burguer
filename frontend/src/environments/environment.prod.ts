@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://rafaelnunesdeoliveira.tech',
-  clienteId: 'deliverburguer',
-  clientSecret: 'deliverburguer123'
+  apiUrl: '${URL_API}',
+  clienteId: '${CLIENT_ID}',
+  clientSecret: '${CLIENT_SECRET}'
 };

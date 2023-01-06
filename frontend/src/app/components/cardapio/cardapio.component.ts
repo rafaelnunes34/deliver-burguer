@@ -33,6 +33,7 @@ export class CardapioComponent implements OnInit {
   public listaCategorias: Categoria[] = [];
   public categoriaId: number = 0;
   public endereco: Endereco;
+  public isBuscandoEndereco: boolean = false;
   public pedido: Pedido;
   public checkout: Checkout;
 
@@ -98,14 +99,17 @@ export class CardapioComponent implements OnInit {
   }
 
   public buscarEnderecoPorCep(event: any): void {
-    
+
     if(event.length >= 8) {
+      this.isBuscandoEndereco = true;
       this.enderecoService.buscarEndereco(event).subscribe({
         next: (res: Endereco) => {
           this.checkout.endereco = res;
+          this.isBuscandoEndereco = false;
         },
         error: (e) => {
           this.toast.error("Erro ao buscar cep")
+          this.isBuscandoEndereco = false;
         }
       })
     }
