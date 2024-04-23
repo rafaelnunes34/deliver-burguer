@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Usuario } from 'src/app/model/usuario';
 import { AuthService } from 'src/app/service/auth.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
-
 
 @Component({
   selector: 'app-login',
@@ -44,12 +41,12 @@ export class LoginComponent implements OnInit {
     
     this.authService.login(email, senha).subscribe(
       {next: (response) => {
-        this.toast.success("Login efetuado com sucesso");
+        this.toast.success("Login efetuado com sucesso", "Login Sucesso", {closeButton: true, progressBar: true});
         this.route.navigate(['']);
         this.formLogin.reset();
       },
       error: err => {
-        console.log(err);
+        this.toast.error("Erro ao efetuar o Login", "Erro Login", {closeButton: true, progressBar: true});
       }
     });
   }

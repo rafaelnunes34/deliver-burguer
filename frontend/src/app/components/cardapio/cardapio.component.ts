@@ -143,7 +143,7 @@ export class CardapioComponent implements OnInit {
       }); 
     }
     else {
-      this.toast.warning("Para finalizar o pedido e preciso fazer o Login");
+      this.toast.warning("Para finalizar o pedido e preciso fazer o Login", "Alerta", {closeButton: true, progressBar: true});
     }
   }
 

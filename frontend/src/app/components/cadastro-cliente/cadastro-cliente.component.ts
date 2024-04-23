@@ -53,8 +53,8 @@ export class CadastroClienteComponent implements OnInit {
     this.usuarioService.adicionarUsuario(this.usuario).subscribe(
       {next: (response: Usuario) => {
         this.usuario = response;
-        this.toast.success("Cadastro realizado com sucesso");
-        this.route.navigate(["''"]);
+        this.toast.success("Cadastro realizado com sucesso", "Sucesso", {closeButton: true, progressBar: true});
+        this.route.navigate(["/login"]);
       }, error: (err) => console.log(console.error(err))
     }); 
   }
